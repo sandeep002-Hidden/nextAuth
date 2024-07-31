@@ -5,10 +5,7 @@ export async function GET() {
       message: "Logout Success",
       success: true,
     });
-    response.cookies.set("nexttoken", "", {
-      httpOnly: true,
-      expires: new Date(0),
-    });
+    response.cookies.delete("nexttoken")
     return response;
   } catch (error: any) {
     return NextResponse.json({ message: error }, { status: 500 });
