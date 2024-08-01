@@ -2,7 +2,7 @@ import Link from "next/link";
 export default function Sidebar() {
   const Routes = [
 
-    { path: "/home", Text: "Home" },
+    { path: "/", Text: "Home" },
     { path: "/dashboard", Text: "Go to Dashboard " },
     { path: "/profile", Text: "Go to Profile" },
     
