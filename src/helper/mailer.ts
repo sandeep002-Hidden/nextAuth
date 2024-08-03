@@ -41,7 +41,7 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
             } or open the link in your browser <br>${
               process.env.DOMAIN
             }/verifyemail?token=${hashedToken}</br>`
-          : `<h1>your Otp is<strong>${otp}</strong></h1><br/>
+          : `<h1>your Otp is <strong>${otp}</strong></h1><br/>
       <p>This Otp is Expiry in 10 minutes </p>`,
     };
     const mailResponse = await transporter.sendMail(mailOptions);

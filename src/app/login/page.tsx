@@ -121,6 +121,9 @@ export default function LoginPage() {
           <Link href="/signup" className="text-white m-4">
             Create a new Account
           </Link>
+          <Link href="/forgotPassword" className="text-white m-4">
+            Forget Password
+          </Link>
         </div>
       </div>
     </>

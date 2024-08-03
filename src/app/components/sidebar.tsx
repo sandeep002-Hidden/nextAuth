@@ -5,6 +5,7 @@ export default function Sidebar() {
     { path: "/", Text: "Home",  },
     { path: "/dashboard", Text: "Go to Dashboard " },
     { path: "/profile", Text: "Go to Profile" },
+    { path: "/forgotPassword", Text: "Change password" },
     
   ];
   return (
