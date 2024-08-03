@@ -2,6 +2,7 @@ import connect from "@/db/dbConfig";
 import User from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
+import { cookies } from "next/headers";
 
 connect();
 
@@ -20,6 +21,7 @@ export async function POST(req: NextRequest) {
         message: "Password Changed Success fully",
         success: true,
       });
+      response.cookies.delete("nexttoken")
     });
   } catch (error: any) {
     console.log(error.message);
