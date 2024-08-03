@@ -27,6 +27,8 @@ const userSchema = new mongoose.Schema(
     forgotPasswordTokenExpire: Date,
     verifyToken: String,
     verifyTokenExpiry: Date,
+    Otp:Number,
+    OtpExpiry:Date,
   },
   { timestamps: true },
 );

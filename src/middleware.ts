@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 export default function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
   const isPublicPath =
-    path === "/login" || path === "/signup" || path === "/verifyemail";
+    path === "/login" || path === "/signup" || path === "/verifyemail" || path==="/changePassword";
   const token = req.cookies.get("nexttoken")?.value || "";
   if (isPublicPath && token) {
     return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
@@ -22,5 +22,6 @@ export const config = {
     "/signup",
     "/dashboard",
     "/verifyemail",
+    "/changePassword",
   ],
 };

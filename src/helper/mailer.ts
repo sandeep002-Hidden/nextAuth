@@ -1,20 +1,21 @@
 import User from "@/models/user.model";
 import bcryptjs from "bcryptjs";
 import nodemailer from "nodemailer";
-
+import generatePassword from "./generateRandom6DigitPassword";
 export const sendEmail = async ({ email, emailType, userId }: any) => {
+  const otp = await generatePassword();
   try {
     const hashedToken = await bcryptjs.hash(userId.toString(), 10);
 
     if (emailType === "VERIFY") {
       await User.findByIdAndUpdate(userId, {
         verifyToken: hashedToken,
-        verifyTokenExpiry: Date.now() + 360000,
+        verifyTokenExpiry: Date.now() + 10 * 60 * 1000,
       });
     } else if (emailType === "RESET") {
       await User.findByIdAndUpdate(userId, {
-        forgotPasswordToken: hashedToken,
-        forgotPasswordTokenExpire: Date.now() + 360000,
+        forgotPasswordToken: otp,
+        forgotPasswordTokenExpire: Date.now() + 10 * 60 * 1000,
       });
     }
     const transporter = nodemailer.createTransport({
@@ -31,11 +32,19 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
       from: process.env.EMAILUSER,
       to: email,
       subject: emailType === "VERIFY" ? "Verify Email" : "Reset Password",
-      html: `<button> <a href="${process.env.DOMAIN}/verifyemail?token=${hashedToken}" target="_blank">Click me</a> </button> ${
-        emailType === "VERIFY" ? "Verify Email" : "Reset Password"
-      } or open the link in your browser <br>${process.env.DOMAIN}/verifyemail?token=${hashedToken}</br>`,
+      html:
+        emailType === "VERIFY"
+          ? `<button> <a href="${
+              process.env.DOMAIN
+            }/verifyemail?token=${hashedToken}" target="_blank">Click me</a> </button> ${
+              emailType === "VERIFY" ? "Verify Email" : "Reset Password"
+            } or open the link in your browser <br>${
+              process.env.DOMAIN
+            }/verifyemail?token=${hashedToken}</br>`
+          : `<h1>your Otp is<strong>${otp}</strong></h1><br/>
+      <p>This Otp is Expiry in 10 minutes </p>`,
     };
-    const mailResponse=await transporter.sendMail(mailOptions)
+    const mailResponse = await transporter.sendMail(mailOptions);
     return mailResponse;
   } catch (error: any) {
     throw new Error(error.message);
