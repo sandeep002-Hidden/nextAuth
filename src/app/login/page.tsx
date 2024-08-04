@@ -97,7 +97,7 @@ export default function LoginPage() {
               setUser({ ...user, email: e.target.value });
             }}
             placeholder={user.email || "email"}
-            className="block h-6 p-4 m-4 border text-white dark: border-white rounded-lg font-semibold text-sm"
+            className="block h-6 p-4 m-4 border text-white border-white rounded-lg font-semibold text-sm"
           />
           <input
             type="password"
